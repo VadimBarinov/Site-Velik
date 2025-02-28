@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+from catalog.models import BikeModel
 
 
 menu = [
@@ -51,3 +52,13 @@ def show_about(request):
         'menu': menu,
     }
     return render(request, 'catalog/favourites.html', data)
+
+
+def show_bike(request, bike_slug):
+    bike = get_object_or_404(BikeModel, slug=bike_slug)
+    data = {
+        'title': 'О нас',
+        'menu': menu,
+        'bike_selected': bike
+    }
+    return render(request, 'catalog/bike.html', data)

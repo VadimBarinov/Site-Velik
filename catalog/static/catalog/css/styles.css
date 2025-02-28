@@ -87,7 +87,7 @@ body {
   text-align: right !important;
   color: #ff7a00 !important;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
   font-weight: 500 !important;
   font-size: 14px !important;
 }
@@ -105,7 +105,7 @@ body {
   text-align: right !important;
   color: #595959 !important;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.1s;
   font-weight: 500 !important;
   font-size: 14px !important;
 }
