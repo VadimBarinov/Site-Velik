@@ -3,30 +3,32 @@
   <div class="row">
     {% for bike in bikes %}
     <div class="col-12 col-md-6 col-lg-4">
-      <div class="card" onclick="{{ bike.get_absolute_url }}">
-        <img src="{% static bike.img_url %}" class="card-img-top" />
-        <div class="card-body">
-          <div class="card-title-container">
-            <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>
-          </div>
-          <div class="d-flex row">
-            <div class="col-2 d-flex">
-              <button class="btn btn-heart" onclick="" type="button">
-                <img src="{% static 'catalog/images/black_heart.svg' %}" />
-              </button>
+      <a class="onclick-card" href="{{bike.get_absolute_url}}">
+        <div class="card">
+          <img src="{% static bike.img_url %}" class="card-img-top" />
+          <div class="card-body">
+            <div class="card-title-container">
+              <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>
             </div>
-            <div class="col-10 d-flex">
-              <button
-                class="btn btn-primary btn-right btn-card"
-                onclick=""
-                type="button"
-              >
-                В избранное
-              </button>
+            <div class="d-flex row">
+              <div class="col-2 d-flex">
+                <a class="btn btn-heart" href="#" type="button">
+                  <img src="{% static 'catalog/images/black_heart.svg' %}" />
+                </a>
+              </div>
+              <div class="col-10 d-flex">
+                <a
+                  class="btn btn-primary btn-right btn-card"
+                  href="#"
+                  type="button"
+                >
+                  В избранное
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </a>
     </div>
     {% endfor %}
   </div>
