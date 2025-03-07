@@ -57,7 +57,7 @@ def show_about(request):
 def show_bike(request, bike_slug):
     bike = get_object_or_404(BikeModel, slug=bike_slug)
     data = {
-        'title': 'О нас',
+        'title': f'{bike.mark.name} {bike.name}',
         'menu': menu,
         'bike_selected': bike
     }

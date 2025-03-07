@@ -18,7 +18,7 @@ class BikeModel(models.Model):
     img_url = models.CharField(max_length=511)
 
     def __str__(self):
-        return self().name
+        return self.name
 
     def get_absolute_url(self):
         return reverse('bike', kwargs={'bike_slug': self.slug})

@@ -1,0 +1,33 @@
+{%load static%}
+<div class="container">
+  <div class="row">
+    {% for bike in bikes %}
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="card" onclick="{{ bike.get_absolute_url }}">
+        <img src="{% static bike.img_url %}" class="card-img-top" />
+        <div class="card-body">
+          <div class="card-title-container">
+            <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>
+          </div>
+          <div class="d-flex row">
+            <div class="col-2 d-flex">
+              <button class="btn btn-heart" onclick="" type="button">
+                <img src="{% static 'catalog/images/black_heart.svg' %}" />
+              </button>
+            </div>
+            <div class="col-10 d-flex">
+              <button
+                class="btn btn-primary btn-right btn-card"
+                onclick=""
+                type="button"
+              >
+                В избранное
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
