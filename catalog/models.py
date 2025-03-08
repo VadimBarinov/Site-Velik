@@ -25,7 +25,7 @@ class BikeModel(models.Model):
 
 
 class BikeModification(models.Model):
-    bike_model = models.ForeignKey(
+    bike_model = models.OneToOneField(
         'BikeModel', on_delete=models.PROTECT, related_name='bike_model'
     )
     name = models.CharField(max_length=255)
