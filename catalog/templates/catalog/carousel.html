@@ -1,4 +1,4 @@
-{%load static%}
+{%load static%} {%load catalog_tags%}
 <div class="container">
   <div
     id="carouselExampleDark"
@@ -40,10 +40,7 @@
               class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5"
             >
               <h5>{{bike.mark.name}} {{bike.name}}</h5>
-              <p>
-                {{bikes_characteristics.(str(bike.slug)).('РАМА,
-                ВИЛКА').('Материал рамы')}}
-              </p>
+              <p>{{bikes_characteristics|get_value_from_dict:bike.slug}}</p>
             </div>
           </div>
         </div>
