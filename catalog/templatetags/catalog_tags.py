@@ -1,5 +1,6 @@
 from django import template
-from catalog.models import BikeModel
+from catalog.models import BikeModel, BikeCharacteristic
+
 
 # регистрация новых тегов
 register = template.Library()
@@ -21,4 +22,23 @@ def show_bikes_6():
 @register.inclusion_tag('catalog/carousel.html')
 def show_carousel():
     bikes = BikeModel.objects.all()[:3]
-    return {'bikes': bikes}
+    id_parents = BikeCharacteristic.objects.filter(id_parent=None)
+    bikes_characteristics = {}
+
+    for item in bikes:
+        characteristics_value = item.bike_model.bike_modification.all()
+        char_value = {}
+
+        for char in characteristics_value:
+            if char_value.get(id_parents.get(pk=char.bike_characteristic.id_parent).name):
+                temp = char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name]
+                temp[char.bike_characteristic.name] = char.value
+                char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = temp
+            else:
+                char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = {
+                    char.bike_characteristic.name: char.value
+                    }
+
+        bikes_characteristics[item.slug] = char_value
+
+    return {'bikes': bikes, 'bikes_characteristics': bikes_characteristics}

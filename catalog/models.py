@@ -39,7 +39,7 @@ class BikeCharacteristic(models.Model):
     id_parent = models.IntegerField(null=True)
 
     def __str__(self):
-        return [self.name, self.id_parent]
+        return self.name
 
 
 class BikeCharacteristicValue(models.Model):
@@ -56,4 +56,4 @@ class BikeCharacteristicValue(models.Model):
     )
 
     def __str__(self):
-        return [self.value, self.bike_characteristic, self.bike_modification]
+        return str(self.pk)

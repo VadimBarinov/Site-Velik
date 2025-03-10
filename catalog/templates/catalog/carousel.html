@@ -40,6 +40,10 @@
               class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5"
             >
               <h5>{{bike.mark.name}} {{bike.name}}</h5>
+              <p>
+                {{bikes_characteristics.(str(bike.slug)).('РАМА,
+                ВИЛКА').('Материал рамы')}}
+              </p>
             </div>
           </div>
         </div>
