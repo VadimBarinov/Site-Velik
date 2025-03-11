@@ -1,3 +1,4 @@
+import random
 from django import template
 from catalog.models import BikeModel, BikeCharacteristic
 
@@ -42,6 +43,19 @@ def show_carousel():
         bikes_characteristics[item.slug] = char_value
 
     return {'bikes': bikes, 'bikes_characteristics': bikes_characteristics}
+
+
+@register.simple_tag
+def get_random_characteristics(bikes, bike_slug):
+    dict_data = bikes.get(bike_slug)
+    random_values = random.choice(list(dict_data))
+    while len(dict_data.get(random_values)) < 5 and len(dict_data) > 1:
+        del dict_data[random_values]
+        random_values = random.choice(list(dict_data))
+    result = list(dict_data.get(random_values).items())
+    if len(result) > 5:
+        result = result[:5]
+    return result
 
 
 @register.filter

@@ -37,10 +37,27 @@
               <img src="{%static bike.img_url%}" class="d-block" />
             </div>
             <div
-              class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5"
+              class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5 pe-md-5 pe-lg-5"
             >
               <h5>{{bike.mark.name}} {{bike.name}}</h5>
-              <p>{{bikes_characteristics|get_value_from_dict:bike.slug}}</p>
+              <table class="table_carousel pe-md-5 pe-lg-5">
+                <tbody>
+                  {% get_random_characteristics bikes_characteristics bike.slug as characteristics_values %} 
+                  {% for key, value in characteristics_values %}
+                  {% if forloop.counter0|divisibleby:2%}
+                  <tr class="tr-grey">
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -53,9 +70,27 @@
               <img src="{%static bike.img_url%}" class="d-block" />
             </div>
             <div
-              class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5"
+              class="carousel-dark d-block carousel-text col-12 col-md-5 col-lg-5 pe-md-5 pe-lg-5"
             >
               <h5>{{bike.mark.name}} {{bike.name}}</h5>
+              <table class="table_carousel pe-md-5 pe-lg-5">
+                <tbody>
+                  {% get_random_characteristics bikes_characteristics bike.slug as characteristics_values %} 
+                  {% for key, value in characteristics_values %}
+                  {% if forloop.counter0|divisibleby:2%}
+                  <tr class="tr-grey">
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                  </tr>
+                  {% else %}
+                  <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                  </tr>
+                  {% endif %}
+                  {% endfor %}
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
