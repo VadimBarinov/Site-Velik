@@ -2,7 +2,7 @@
 <div class="container">
   <div class="row">
     {% for bike in bikes %}
-    <div class="col-12 col-md-6 col-lg-4">
+    <div class="my-card-col col-12 col-md-6 col-lg-4">
       <a class="onclick-card" href="{{bike.get_absolute_url}}">
         <div class="card">
           <img src="{% static bike.img_url %}" class="card-img-top" />
