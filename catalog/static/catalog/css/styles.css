@@ -189,8 +189,8 @@ body {
   margin-right: auto !important;
 }
 
-.card-star a {
-  padding: 0 1rem 0 0!important;
+.card-star{
+  padding-left: 1rem;
 }
 
 .btn-card {

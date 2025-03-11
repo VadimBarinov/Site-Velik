@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, render
-from catalog.models import BikeModel
+from catalog.models import BikeModel, BikeCharacteristic
 
 
 menu = [
@@ -56,9 +56,26 @@ def show_about(request):
 
 def show_bike(request, bike_slug):
     bike = get_object_or_404(BikeModel, slug=bike_slug)
+    id_parents = BikeCharacteristic.objects.filter(id_parent=None)
+    bike_characteristics = {}
+    characteristics_value = bike.bike_model.bike_modification.all()
+    char_value = {}
+
+    for char in characteristics_value:
+        if char_value.get(id_parents.get(pk=char.bike_characteristic.id_parent).name):
+            temp = char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name]
+            temp[char.bike_characteristic.name] = char.value
+            char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = temp
+        else:
+            char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = {
+                char.bike_characteristic.name: char.value
+                }
+
+    bike_characteristics = char_value
     data = {
         'title': f'{bike.mark.name} {bike.name}',
         'menu': menu,
-        'bike_selected': bike
+        'bike_selected': bike,
+        'bike_characteristics': bike_characteristics,
     }
     return render(request, 'catalog/bike.html', data)
