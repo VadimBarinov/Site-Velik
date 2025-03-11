@@ -5,9 +5,23 @@
     <div class="my-card-col col-12 col-md-6 col-lg-4">
       <a class="onclick-card" href="{{bike.get_absolute_url}}">
         <div class="card">
+          
+          {% if forloop.counter|divisibleby:2 %}
           <div class="card-star">
-            <img src="{% static 'catalog/images/grad_star.svg' %}" /> 4,7
+            <img src="{% static 'catalog/images/black_star.svg' %}" />
+            <div>
+              &nbspнет оценок
+            </div>
           </div>
+          {% else %}
+          <div class="card-star">
+            <img src="{% static 'catalog/images/grad_star.svg' %}" />
+            <div>
+              &nbsp4,2
+            </div>
+          </div>
+          {% endif %}
+            
           <img src="{% static bike.img_url %}" class="card-img-top" />
           <div class="card-body">
             <div class="card-title-container">
