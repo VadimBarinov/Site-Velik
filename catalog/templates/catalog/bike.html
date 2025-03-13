@@ -3,38 +3,63 @@
 {%load static%} 
 {%block content%}
 <div class="container">
-    <div class="">
-      <div class="row d-flex">
-        <div class="col-12 col-lg-6">
-          <img src="{%static bike_selected.img_url%}" class="d-block" />
+  <div class="border-bottom row d-flex pt-3 pb-5">
+    <div class="col-0 col-lg-6"></div>
+    <div class="bike-title col-12 col-lg-6 ps-3 pe-3 pb-3">
+      <h1>{{bike_selected.mark.name}} {{bike_selected.name}}</h1>
+    </div>
+    <div class="bike-img col-12 col-lg-6">
+      <img src="{%static bike_selected.img_url%}" class="d-block" />
+    </div>
+    <div class="col-12 col-lg-6 p-3">
+      <div class="d-flex row">
+        <div class="d-flex bike-add col-6">
+          <a href="#">
+            <div class="bike-star">
+              <img src="{% static 'catalog/images/black_star.svg' %}" />
+              <div class="text-grey">
+                &nbspнет оценок
+              </div>
+            </div>
+          </a>
         </div>
-        <div
-          class="d-block col-12 col-lg-6 pe-lg-6"
-        >
-          <div class="">
-            <h5>{{bike_selected.mark.name}} {{bike_selected.name}}</h5>
+        <div class="d-flex bike-add-favourites col-6">
+          <div class="d-flex">
+            <a class="btn btn-heart btn-heart-bike" href="#" type="button">
+              <img src="{% static 'catalog/images/black_heart.svg' %}" />
+            </a>
+          </div>
+          <div class="d-none d-md-flex d-lg-flex">
+            <a
+              class="btn btn-primary btn-right btn-bike"
+              href="#"
+              type="button"
+            >
+              В избранное
+            </a>
           </div>
         </div>
-          {% for key_parent, value_parent in bike_characteristics.items %}
-                <div
-                    class="col-12 col-md-6 col-lg-6"
-                >
-                    <h5>{{ key_parent }}</h5>
-                    <div class="">
-                        <table class="table-bike my-border">
-                            <tbody>
-                                {% for key, value in value_parent.items %}
-                                <tr>
-                                    <td class="text-grey">{{key}}</td>
-                                    <td>{{value}}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                      </div>
-                </div>
-            {% endfor %}
-        </div>
+      </div>
     </div>
+  </div>
+  <div class="row d-flex">
+  {% for key_parent, value_parent in bike_characteristics.items %}
+    <div class="col-12 col-lg-6">
+        <h5>{{ key_parent }}</h5>
+        <div class="">
+            <table class="table-bike my-border">
+                <tbody>
+                    {% for key, value in value_parent.items %}
+                    <tr>
+                        <td class="text-grey">{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+          </div>
+    </div>
+  {% endfor %}
+  </div>
 </div>
 {%endblock%}

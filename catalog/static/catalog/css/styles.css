@@ -185,7 +185,7 @@ body {
 }
 
 .btn-heart {
-  padding: 0.5rem 0rem 0.5rem 0rem !important;
+  padding: 0rem 0rem 0rem 0rem !important;
   margin-right: auto !important;
 }
 
@@ -345,4 +345,52 @@ body {
 
 .text-grey {
   color: #595959 !important;
+}
+
+.bike-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.bike-img img {
+  height: 24rem;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.bike-title h1 {
+  font-size: 28px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.bike-add-favourites {
+  justify-content: end;
+  align-items: center;
+}
+
+.bike-add{
+  align-items: center;
+}
+
+.bike-add a{
+  text-decoration: none !important;
+}
+
+.btn-heart-bike {
+  padding: 0rem 1rem 0rem 1rem !important;
+}
+
+.btn-bike {
+  font-size: 18px !important;
+  margin-left: auto !important;
+}
+
+.bike-star{
+  display: flex;
+  color: black;
+  align-items: flex-end;
+  font-size: 18px !important;
+  padding: 0rem 0rem 0rem 0rem !important;
 }
