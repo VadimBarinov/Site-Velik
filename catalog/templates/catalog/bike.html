@@ -4,26 +4,28 @@
 {%block content%}
 <div class="container">
     <div class="">
-        <div class="row d-flex">
-          <div class="col-12 col-md-7 col-lg-7">
-            <img src="{%static bike_selected.img_url%}" class="d-block" />
-          </div>
-          <div
-            class="col-12 col-md-5 col-lg-5 pe-md-5 pe-lg-5"
-          >
+      <div class="row d-flex">
+        <div class="col-12 col-lg-6">
+          <img src="{%static bike_selected.img_url%}" class="d-block" />
+        </div>
+        <div
+          class="d-block col-12 col-lg-6 pe-lg-6"
+        >
+          <div class="">
             <h5>{{bike_selected.mark.name}} {{bike_selected.name}}</h5>
           </div>
+        </div>
           {% for key_parent, value_parent in bike_characteristics.items %}
                 <div
-                    class="col-12 col-md-5 col-lg-5 pe-md-5 pe-lg-5"
+                    class="col-12 col-md-6 col-lg-6"
                 >
                     <h5>{{ key_parent }}</h5>
-                    <div class="pe-md-5 pe-lg-5 pt-md-4 pt-lg-4">
-                        <table class="table-bike">
+                    <div class="">
+                        <table class="table-bike my-border">
                             <tbody>
                                 {% for key, value in value_parent.items %}
                                 <tr>
-                                    <td>{{key}}</td>
+                                    <td class="text-grey">{{key}}</td>
                                     <td>{{value}}</td>
                                 </tr>
                                 {% endfor %}

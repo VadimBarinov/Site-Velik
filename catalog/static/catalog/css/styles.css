@@ -281,19 +281,20 @@ body {
   width: 11% !important;
 }
 
-.table_carousel {
+.table-carousel {
   padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   font-size: 14px;
+  font-weight: 500;
   border-spacing: 0;
 	border-collapse: separate;
 	width: 100%;  
-  word-wrap: break-word;
+  overflow-wrap: break-word;
   box-shadow: 0rem 0rem 1rem #B0B0B0;
 }
 
-.table_carousel td {
+.table-carousel td {
   padding: 0.2rem 0.2rem 0.2rem 0.2rem;
-  border-bottom: 0.1rem solid;
+  border-bottom: 0.06rem solid #595959;
 }
 
 .my-catalog-filter {
@@ -326,16 +327,22 @@ body {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 2px black !important;
 }
 
-.table_bike {
-  padding-left: 1.6rem;
-  padding-right: 1.6rem;
+.table-bike {
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
   font-size: 14px;
+  font-weight: 500;
   border-spacing: 0;
 	border-collapse: separate;
-	width: 100%;
+	width: 100%;  
   overflow-wrap: break-word;
+  box-shadow: 0rem 0rem 1rem #B0B0B0;
 }
 
-.table_bike td {
+.table-bike td {
   padding: 0.2rem 0.2rem 0.2rem 0.2rem;
+  border-bottom: 0.06rem solid #595959;
+}
+
+.text-grey {
+  color: #595959 !important;
 }
