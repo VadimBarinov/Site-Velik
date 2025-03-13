@@ -362,7 +362,6 @@ body {
 .bike-title h1 {
   font-size: 28px;
   font-weight: 700;
-  justify-content: center;
 }
 
 .bike-add-favourites {
@@ -387,10 +386,28 @@ body {
   margin-left: auto !important;
 }
 
-.bike-star{
+.bike-star {
   display: flex;
   color: black;
   align-items: flex-end;
   font-size: 18px !important;
   padding: 0rem 0rem 0rem 0rem !important;
+}
+
+.characteristics {
+  justify-content: center;
+}
+
+.characteristics h2 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.table-bike-container {
+  padding: 1.5rem 0.5rem 1.5rem 0.5rem;
+}
+
+.table-bike-container h5 {
+  font-size: 18px;
+  font-weight: 500;
 }
