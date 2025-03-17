@@ -7,8 +7,10 @@ class HomePage(DataMixin, ListView):
     model = BikeModel
     template_name = 'catalog/index.html'
     context_object_name = 'bikes'
-    paginate_by = 3
     title_page = 'Главная'
+
+    def get_queryset(self):
+        return BikeModel.objects.all()[:3]
 
 
 class ShowCatalog(DataMixin, ListView):
