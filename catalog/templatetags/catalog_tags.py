@@ -1,6 +1,6 @@
 import random
 from django import template
-from catalog.models import BikeModel, BikeCharacteristic
+from catalog.models import BikeModel, BikeCharacteristicValue
 
 
 # регистрация новых тегов
@@ -23,24 +23,10 @@ def show_bikes_6():
 @register.inclusion_tag('catalog/carousel.html')
 def show_carousel():
     bikes = BikeModel.objects.all()[:3]
-    id_parents = BikeCharacteristic.objects.filter(id_parent=None)
     bikes_characteristics = {}
 
     for item in bikes:
-        characteristics_value = item.bike_model.bike_modification.all()
-        char_value = {}
-
-        for char in characteristics_value:
-            if char_value.get(id_parents.get(pk=char.bike_characteristic.id_parent).name):
-                temp = char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name]
-                temp[char.bike_characteristic.name] = char.value
-                char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = temp
-            else:
-                char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = {
-                    char.bike_characteristic.name: char.value
-                    }
-
-        bikes_characteristics[item.slug] = char_value
+        bikes_characteristics[item.slug] = BikeCharacteristicValue.get_bike_characteristics(item)
 
     return {'bikes': bikes, 'bikes_characteristics': bikes_characteristics}
 

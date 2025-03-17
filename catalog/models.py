@@ -57,3 +57,19 @@ class BikeCharacteristicValue(models.Model):
 
     def __str__(self):
         return str(self.pk)
+
+    def get_bike_characteristics(bike):
+        id_parents = BikeCharacteristic.objects.filter(id_parent=None)
+        bike_characteristics = {}
+        characteristics_value = bike.bike_model.bike_modification.all()
+
+        for char in characteristics_value:
+            if bike_characteristics.get(id_parents.get(pk=char.bike_characteristic.id_parent).name):
+                temp = bike_characteristics[id_parents.get(pk=char.bike_characteristic.id_parent).name]
+                temp[char.bike_characteristic.name] = char.value
+                bike_characteristics[id_parents.get(pk=char.bike_characteristic.id_parent).name] = temp
+            else:
+                bike_characteristics[id_parents.get(pk=char.bike_characteristic.id_parent).name] = {
+                    char.bike_characteristic.name: char.value
+                    }
+        return bike_characteristics

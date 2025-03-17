@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, render
-from catalog.models import BikeModel, BikeCharacteristic
+from django.views.generic import TemplateView, DetailView
+from catalog.models import BikeModel, BikeCharacteristicValue
 
 
 menu = [
@@ -22,60 +23,47 @@ menu = [
 ]
 
 
-def index(request):
-    data = {
+class HomePage(TemplateView):
+    template_name = 'catalog/index.html'
+    extra_context = {
         'title': 'Главная',
         'menu': menu,
     }
-    return render(request, 'catalog/index.html', data)
 
 
-def show_catalog(request):
-    data = {
+class ShowCatalog(TemplateView):
+    template_name = 'catalog/catalog.html'
+    extra_context = {
         'title': 'Каталог',
         'menu': menu,
     }
-    return render(request, 'catalog/catalog.html', data)
 
 
-def show_favourites(request):
-    data = {
+class ShowFavourites(TemplateView):
+    template_name = 'catalog/favourites.html'
+    extra_context = {
         'title': 'Избранное',
         'menu': menu,
     }
-    return render(request, 'catalog/favourites.html', data)
 
 
-def show_about(request):
-    data = {
+class ShowAbout(TemplateView):
+    template_name = 'catalog/about.html'
+    extra_context = {
         'title': 'О нас',
         'menu': menu,
     }
-    return render(request, 'catalog/favourites.html', data)
 
 
-def show_bike(request, bike_slug):
-    bike = get_object_or_404(BikeModel, slug=bike_slug)
-    id_parents = BikeCharacteristic.objects.filter(id_parent=None)
-    bike_characteristics = {}
-    characteristics_value = bike.bike_model.bike_modification.all()
-    char_value = {}
+class ShowBike(DetailView):
+    model = BikeModel
+    template_name = 'catalog/bike.html'
+    slug_url_kwarg = 'bike_slug'
+    context_object_name = 'bike_selected'
 
-    for char in characteristics_value:
-        if char_value.get(id_parents.get(pk=char.bike_characteristic.id_parent).name):
-            temp = char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name]
-            temp[char.bike_characteristic.name] = char.value
-            char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = temp
-        else:
-            char_value[id_parents.get(pk=char.bike_characteristic.id_parent).name] = {
-                char.bike_characteristic.name: char.value
-                }
-
-    bike_characteristics = char_value
-    data = {
-        'title': f'{bike.mark.name} {bike.name}',
-        'menu': menu,
-        'bike_selected': bike,
-        'bike_characteristics': bike_characteristics,
-    }
-    return render(request, 'catalog/bike.html', data)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = f'{context['bike_selected'].mark.name} {context['bike_selected'].name}'
+        context['menu'] = menu
+        context['bike_characteristics'] = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
+        return context
