@@ -411,3 +411,39 @@ body {
   font-size: 18px;
   font-weight: 500;
 }
+
+.list-pages {
+	text-align: center;
+  margin-top: 5rem;
+}
+.list-pages ul {
+	list-style: none;
+  padding-left: 0;
+}
+.list-pages ul li {
+	display: inline-block;
+  margin: 0.2rem;
+}
+.page-num a {
+	color: black;
+	font-size: 20px;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+	text-decoration: none;
+  transition: 0.2s;
+}
+.list-pages .page-num, .page-num-selected {
+	display: inline-block;
+}
+.page-num a:hover {
+	box-shadow: inset 0 0 0 2.1px black;
+  border-radius: 0.5rem;
+}
+.list-pages .page-num-selected {
+	box-shadow: none;
+	color: black;
+  padding: 0.3rem 1rem 0.3rem 1rem;
+	font-size: 20px;
+}
+.list-pages .page-num-selected:hover {
+	box-shadow: none;
+}

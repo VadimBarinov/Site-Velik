@@ -1,6 +1,6 @@
 {% extends 'base.html' %} 
 {% load static %}
-{%load catalog_tags%}
+{% load catalog_tags %}
 {% block content %} 
 <!-- фильтр -->
 <div class="container">
@@ -19,6 +19,33 @@
       </form>
     </div>
   </div>
-{%show_bikes%}
+{% include 'catalog/includes/list_bikes.html' %}
+<div class="container">
+  <nav class="list-pages">
+    <ul>
+  
+      <li class="page-num">
+        <a class="border my-border" href="?page=1">&laquo;</a>
+      </li>
+        
+      {% for p in paginator.page_range %}
+      
+      {% if page_obj.number == p %}
+      <li class="page-num page-num-selected">{{ p }}</li>
+      {% elif p >= page_obj.number|add:-1 and p <= page_obj.number|add:2 %}
+      <li class="page-num">
+        <a class="border my-border" href="?page={{ p }}">{{ p }}</a>
+      </li>
+      {% endif %}
+        
+      {% endfor %}
+
+      <li class="page-num">
+        <a class="border my-border" href="?page={{ page_obj.paginator.num_pages }}">&raquo;</a>
+      </li>
+        
+    </ul>
+  </nav>
+</div>
 <script type="text/javascript" src="{% static 'catalog/js/catalog_filter.js' %}"></script>
 {% endblock %}

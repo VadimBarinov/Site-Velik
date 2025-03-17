@@ -1,16 +1,21 @@
-from django.shortcuts import get_object_or_404, render
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, ListView
 from catalog.models import BikeModel, BikeCharacteristicValue
 from catalog.utils import DataMixin
 
 
-class HomePage(DataMixin, TemplateView):
+class HomePage(DataMixin, ListView):
+    model = BikeModel
     template_name = 'catalog/index.html'
+    context_object_name = 'bikes'
+    paginate_by = 3
     title_page = 'Главная'
 
 
-class ShowCatalog(DataMixin, TemplateView):
+class ShowCatalog(DataMixin, ListView):
+    model = BikeModel
     template_name = 'catalog/catalog.html'
+    context_object_name = 'bikes'
+    paginate_by = 15
     title_page = 'Каталог'
 
 
