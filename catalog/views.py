@@ -1,61 +1,30 @@
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import TemplateView, DetailView
 from catalog.models import BikeModel, BikeCharacteristicValue
+from catalog.utils import DataMixin
 
 
-menu = [
-    {
-        'title': 'Главная',
-        'url': 'home',
-    },
-    {
-        'title': 'Каталог',
-        'url': 'catalog',
-    },
-    {
-        'title': 'Избранное',
-        'url': 'favourites',
-    },
-    {
-        'title': 'О нас',
-        'url': 'about',
-    },
-]
-
-
-class HomePage(TemplateView):
+class HomePage(DataMixin, TemplateView):
     template_name = 'catalog/index.html'
-    extra_context = {
-        'title': 'Главная',
-        'menu': menu,
-    }
+    title_page = 'Главная'
 
 
-class ShowCatalog(TemplateView):
+class ShowCatalog(DataMixin, TemplateView):
     template_name = 'catalog/catalog.html'
-    extra_context = {
-        'title': 'Каталог',
-        'menu': menu,
-    }
+    title_page = 'Каталог'
 
 
-class ShowFavourites(TemplateView):
+class ShowFavourites(DataMixin, TemplateView):
     template_name = 'catalog/favourites.html'
-    extra_context = {
-        'title': 'Избранное',
-        'menu': menu,
-    }
+    title_page = 'Избранное'
 
 
-class ShowAbout(TemplateView):
+class ShowAbout(DataMixin, TemplateView):
     template_name = 'catalog/about.html'
-    extra_context = {
-        'title': 'О нас',
-        'menu': menu,
-    }
+    title_page = 'О нас'
 
 
-class ShowBike(DetailView):
+class ShowBike(DataMixin, DetailView):
     model = BikeModel
     template_name = 'catalog/bike.html'
     slug_url_kwarg = 'bike_slug'
@@ -63,7 +32,6 @@ class ShowBike(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = f'{context['bike_selected'].mark.name} {context['bike_selected'].name}'
-        context['menu'] = menu
-        context['bike_characteristics'] = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
-        return context
+        title = context['bike_selected'].mark.name + ' ' + context['bike_selected'].name
+        bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
+        return self.get_mixin_context(context, title=title, bike_characteristics=bike_characteristics)
