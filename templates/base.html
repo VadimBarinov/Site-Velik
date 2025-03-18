@@ -93,14 +93,14 @@
             <div class="d-flex">
               <form method="post" action="{% url 'users:logout' %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary item-navbar btn-right">
+                <button type="submit" class="btn btn-outline-primary item-navbar btn-right">
                   Выйти
                 </button>
               </form>
             </div>
             {% else %}
             <div class="d-flex">
-              <a href="">
+              <a href="{% url 'users:register' %}">
                 <button class="btn btn-outline-primary item-navbar">
                   Регистрация
                 </button>

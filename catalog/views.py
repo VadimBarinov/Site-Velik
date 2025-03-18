@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, DetailView, ListView
 from catalog.models import BikeModel, BikeCharacteristicValue
 from catalog.utils import DataMixin
 from django.db.models import Q
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomePage(DataMixin, ListView):
@@ -36,7 +37,7 @@ class ShowCatalog(DataMixin, ListView):
         return context
 
 
-class ShowFavourites(DataMixin, ListView):
+class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
     template_name = 'catalog/favourites.html'
     title_page = 'Избранное'
     context_object_name = 'bikes'
