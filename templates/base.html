@@ -145,7 +145,7 @@
             <div class="d-flex justify-content-end">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  {% for item in menu %} {% if forloop.counter0|divisibleby:2%}
+                  {% for item in main_menu %} {% if forloop.counter0|divisibleby:2%}
                   <a
                     href="{% url item.url %}"
                     class="nav-link item-footer-grey footer-menu"
