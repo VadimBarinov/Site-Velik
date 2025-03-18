@@ -1,4 +1,5 @@
 {% load static %}
+{% load catalog_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +69,7 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              {% for item in menu %}
+              {% for item in main_menu %}
               <li class="nav-item item-navbar">
                 {% if title == item.title %}
                 <a class="nav-link active" href="{% url item.url %}"
@@ -82,6 +83,21 @@
               </li>
               {% endfor %}
             </ul>
+
+            
+            {% if user.is_authenticated %}
+            <div class="d-flex align-items-center">
+              <p class="username item-navbar">{{ user.username }}</p>
+              <img class="item-navbar" width="50" src="{% static 'catalog/images/profile_icon.svg' %}">
+            </div>
+            <div class="d-flex">
+              <a href="{% url 'users:logout' %}">
+                <button class="btn btn-primary item-navbar btn-right">
+                  Выйти
+                </button>
+              </a>
+            </div>
+            {% else %}
             <div class="d-flex">
               <a href="">
                 <button class="btn btn-outline-primary item-navbar">
@@ -96,6 +112,9 @@
                 </button>
               </a>
             </div>
+            {% endif %}
+              
+
           </div>
         </div>
       </nav>
