@@ -298,26 +298,44 @@ body {
 }
 
 .my-catalog-filter {
-  width: 20rem;
-  margin: auto;
+  width: 100%;
+  padding-left: 2.2rem !important;
+  padding-right: 2.2rem !important;
 }
 
 .my-search-box {
   position: relative;
   transition: 0.2s;
 }
-.my-search-icon {
-  position: absolute;
-  top: 0.4rem;
-  right: 0;
-  display: inline-block;
-  width: 1.6rem;
-  height: 1.6rem;
-  margin-right: 0.4rem;
+
+.my-search-box input {
+  padding: 0.5rem 0.5rem 0.5rem 3rem !important;
 }
 
-.hide-card {
-  display: none;
+.my-search-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-block;
+  margin: 0.5rem 0.6rem 0.5rem 0.6rem;
+}
+
+.my-btn-search {
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem 0.5rem 1rem !important;
+  background-color: white;
+  transition: 0.2s;
+  margin-left: 1rem;
+}
+
+.my-btn-search:hover {
+	box-shadow: inset 0 0 0 2.1px black;
+  border-radius: 0.5rem;
+}
+
+.search-container {
+  justify-content: center;
 }
 
 .form-control:focus {

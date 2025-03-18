@@ -1,6 +1,7 @@
 from django.views.generic import TemplateView, DetailView, ListView
 from catalog.models import BikeModel, BikeCharacteristicValue
 from catalog.utils import DataMixin
+from django.db.models import Q
 
 
 class HomePage(DataMixin, ListView):
@@ -16,14 +17,44 @@ class HomePage(DataMixin, ListView):
 class ShowCatalog(DataMixin, ListView):
     model = BikeModel
     template_name = 'catalog/catalog.html'
+    title_page = 'Каталог'
     context_object_name = 'bikes'
     paginate_by = 15
-    title_page = 'Каталог'
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            object_list = BikeModel.objects.filter(
+                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            )
+            return object_list
+        return BikeModel.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['input_value'] = self.request.GET.get('query')
+        return context
 
 
-class ShowFavourites(DataMixin, TemplateView):
+class ShowFavourites(DataMixin, ListView):
     template_name = 'catalog/favourites.html'
     title_page = 'Избранное'
+    context_object_name = 'bikes'
+    paginate_by = 15
+
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        if query:
+            object_list = BikeModel.objects.filter(
+                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            )
+            return object_list
+        return BikeModel.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['input_value'] = self.request.GET.get('query')
+        return context
 
 
 class ShowAbout(DataMixin, TemplateView):
