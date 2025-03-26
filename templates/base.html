@@ -86,10 +86,12 @@
 
             
             {% if user.is_authenticated %}
-            <div class="d-flex align-items-center">
-              <p class="username item-navbar">{{ user.username }}</p>
-              <img class="item-navbar" width="50" src="{% static 'catalog/images/profile_icon.svg' %}">
-            </div>
+            <a class="profile-link" href="{% url 'users:profile' %}">
+              <div class="d-flex align-items-center">
+                  <p class="username item-navbar">{{ user.username }}</p>
+                  <img class="item-navbar" width="50" src="{% static 'catalog/images/profile_icon.svg' %}">
+              </div>
+            </a>
             <div class="d-flex">
               <form method="post" action="{% url 'users:logout' %}">
                 {% csrf_token %}

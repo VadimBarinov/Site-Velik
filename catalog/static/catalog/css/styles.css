@@ -469,3 +469,13 @@ body {
 .list-pages .page-num-selected:hover {
 	box-shadow: none;
 }
+
+.profile-link {
+  text-decoration: none !important;
+  color: black !important;
+  transition: 0.2s;
+}
+
+.profile-link:hover {
+  opacity: 0.7;
+}
