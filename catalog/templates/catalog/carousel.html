@@ -35,7 +35,7 @@
           <div class="row d-flex">
             <div class="carousel-img col-12 col-lg-7">
               
-              {% if bike.img_url %}
+              {% if bike.img_url|find_image %}
               <img src="{{ bike.img_url.url }}" class="d-block" />
               {% else %}
               <img src="{{ default_img }}" class="d-block" />
@@ -71,7 +71,7 @@
           <div class="row d-flex">
             <div class="carousel-img col-12 col-lg-7">
 
-              {% if bike.img_url %}
+              {% if bike.img_url|find_image %}
               <img src="{{ bike.img_url.url }}" class="d-block" />
               {% else %}
               <img src="{{ default_img }}" class="d-block" />

@@ -3,7 +3,6 @@ from catalog.models import BikeModel, BikeCharacteristicValue
 from catalog.utils import DataMixin
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin
-from velik import settings
 
 
 class HomePage(DataMixin, ListView):
@@ -14,11 +13,6 @@ class HomePage(DataMixin, ListView):
 
     def get_queryset(self):
         return BikeModel.objects.all()[:3]
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['default_img'] = settings.DEFAULT_BIKE_IMAGE
-        return context
 
 
 class ShowCatalog(DataMixin, ListView):
@@ -40,7 +34,6 @@ class ShowCatalog(DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['input_value'] = self.request.GET.get('query')
-        context['default_img'] = settings.DEFAULT_BIKE_IMAGE
         return context
 
 
@@ -62,7 +55,6 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['input_value'] = self.request.GET.get('query')
-        context['default_img'] = settings.DEFAULT_BIKE_IMAGE
         return context
 
 
@@ -79,7 +71,6 @@ class ShowBike(DataMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['default_img'] = settings.DEFAULT_BIKE_IMAGE
         title = context['bike_selected'].mark.name + ' ' + context['bike_selected'].name
         bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
         return self.get_mixin_context(context, title=title, bike_characteristics=bike_characteristics)

@@ -1,4 +1,5 @@
 {%load static%}
+{%load catalog_tags%}
 <div class="container">
   <div class="row">
     {% for bike in bikes %}
@@ -22,7 +23,7 @@
           </div>
           {% endif %}
 
-          {% if bike.img_url %}
+          {% if bike.img_url|find_image %}
           <img src="{{ bike.img_url.url }}" class="card-img-top" />
           {% else %}
           <img src="{{ default_img }}" class="card-img-top" />

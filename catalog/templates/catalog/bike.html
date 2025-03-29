@@ -9,7 +9,7 @@
       <h1>{{bike_selected.mark.name}} {{bike_selected.name}}</h1>
     </div>
     <div class="bike-img col-12 col-lg-6 pt-3 pe-3">
-      {% if bike_selected.img_url %}
+      {% if bike_selected.img_url|find_image %}
       <img src="{{ bike_selected.img_url.url }}" class="d-block" />
       {% else %}
       <img src="{{ default_img }}" class="d-block" />

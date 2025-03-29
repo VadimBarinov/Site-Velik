@@ -2,10 +2,20 @@ import random
 from django import template
 from catalog.models import BikeModel, BikeCharacteristicValue
 from velik import settings
+from velik import settings
 
 
 # регистрация новых тегов
 register = template.Library()
+
+
+@register.filter
+def find_image(image_url):
+    try:
+        if (image_url and image_url.file):
+            return True
+    except FileNotFoundError:
+        return False
 
 
 @register.inclusion_tag('catalog/carousel.html')
