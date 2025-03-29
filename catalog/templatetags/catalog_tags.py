@@ -1,6 +1,7 @@
 import random
 from django import template
 from catalog.models import BikeModel, BikeCharacteristicValue
+from velik import settings
 
 
 # регистрация новых тегов
@@ -15,7 +16,11 @@ def show_carousel():
     for item in bikes:
         bikes_characteristics[item.slug] = BikeCharacteristicValue.get_bike_characteristics(item)
 
-    return {'bikes': bikes, 'bikes_characteristics': bikes_characteristics}
+    return {
+        'bikes': bikes,
+        'bikes_characteristics': bikes_characteristics,
+        'default_img': settings.DEFAULT_BIKE_IMAGE,
+        }
 
 
 @register.simple_tag

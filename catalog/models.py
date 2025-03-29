@@ -15,7 +15,12 @@ class BikeModel(models.Model):
         )
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True, db_index=True)
-    img_url = models.CharField(max_length=511)
+    img_url = models.ImageField(
+        upload_to="bikes/%Y/%m/%d/",
+        default=None,
+        blank=True,
+        null=True
+        )
 
     def __str__(self):
         return self.name

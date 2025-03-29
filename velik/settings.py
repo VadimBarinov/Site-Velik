@@ -119,6 +119,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_URL = '/media/'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -144,3 +147,8 @@ EMAIL_USE_SSL = config.EMAIL_USE_SSL
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'users.User'
+
+DEFAULT_BIKE_IMAGE = MEDIA_URL + 'bikes/default.png'
+DEFAULT_PROFILE_IMAGE = MEDIA_URL + 'users/profile_icon.png'

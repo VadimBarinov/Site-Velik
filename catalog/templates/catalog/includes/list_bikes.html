@@ -21,8 +21,13 @@
             </div>
           </div>
           {% endif %}
-            
-          <img src="{% static bike.img_url %}" class="card-img-top" />
+
+          {% if bike.img_url %}
+          <img src="{{ bike.img_url.url }}" class="card-img-top" />
+          {% else %}
+          <img src="{{ default_img }}" class="card-img-top" />
+          {% endif %}
+          
           <div class="card-body">
             <div class="card-title-container">
               <h5 class="card-title">{{ bike.mark.name }} {{ bike.name }}</h5>

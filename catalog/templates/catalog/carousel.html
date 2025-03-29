@@ -34,7 +34,13 @@
         <div class="carousel-item active">
           <div class="row d-flex">
             <div class="carousel-img col-12 col-lg-7">
-              <img src="{%static bike.img_url%}" class="d-block" />
+              
+              {% if bike.img_url %}
+              <img src="{{ bike.img_url.url }}" class="d-block" />
+              {% else %}
+              <img src="{{ default_img }}" class="d-block" />
+              {% endif %}
+                
             </div>
             <div
               class="carousel-dark d-block carousel-text col-12 col-lg-5 pe-lg-5 mb-5 mb-md-0 mb-lg-0"
@@ -64,7 +70,13 @@
         <div class="carousel-item">
           <div class="row d-flex">
             <div class="carousel-img col-12 col-lg-7">
-              <img src="{%static bike.img_url%}" class="d-block" />
+
+              {% if bike.img_url %}
+              <img src="{{ bike.img_url.url }}" class="d-block" />
+              {% else %}
+              <img src="{{ default_img }}" class="d-block" />
+              {% endif %}
+              
             </div>
             <div
               class="carousel-dark d-block carousel-text col-12 col-lg-5 pe-lg-5 mb-5 mb-md-0 mb-lg-0"
