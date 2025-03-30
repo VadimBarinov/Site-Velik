@@ -7,32 +7,39 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def add_del_favourites(current_user, current_bike):
-    found_favourite = BikeFavourites.objects.filter(
-        Q(user__pk=current_user.pk) & Q(bike__pk=current_bike)
-    )
-    if found_favourite.exists():
-        found_favourite.delete()
-        return JsonResponse(
-            {
-                'is_taken': True,
-                'is_added': False,
-                'bike_selected': current_bike,
-            }
+    if current_user.is_authenticated:
+        found_favourite = BikeFavourites.objects.filter(
+            Q(user__pk=current_user.pk) & Q(bike__pk=current_bike)
         )
+        if found_favourite.exists():
+            found_favourite.delete()
+            return JsonResponse(
+                {
+                    'is_taken': True,
+                    'is_added': False,
+                    'bike_selected': current_bike,
+                }
+            )
 
+        else:
+            save_favourite = BikeFavourites(
+                user=current_user,
+                bike=BikeModel.objects.get(pk=current_bike)
+            )
+            save_favourite.save()
+            return JsonResponse(
+                {
+                    'is_taken': True,
+                    'is_added': True,
+                    'bike_selected': current_bike,
+                }
+            )
     else:
-        save_favourite = BikeFavourites(
-            user=current_user,
-            bike=BikeModel.objects.get(pk=current_bike)
-        )
-        save_favourite.save()
         return JsonResponse(
-            {
-                'is_taken': True,
-                'is_added': True,
-                'bike_selected': current_bike,
-            }
-        )
+                {
+                    'is_taken': False,
+                }
+            )
 
 
 class HomePage(DataMixin, ListView):
