@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 
 class BikeMark(models.Model):
@@ -78,3 +79,16 @@ class BikeCharacteristicValue(models.Model):
                     char.bike_characteristic.name: char.value
                     }
         return bike_characteristics
+
+
+class BikeFavourites(models.Model):
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        related_name='user'
+    )
+    bike = models.ForeignKey(
+        'BikeModel',
+        on_delete=models.PROTECT,
+        related_name='bike'
+    )

@@ -28,19 +28,59 @@
           </button>
         </div>
         <div class="d-flex bike-add-favourites col-4 col-md-6 col-lg-6">
-          <div class="d-flex">
-            <button class="btn btn-heart btn-heart-bike" type="button">
-              <img src="{% static 'catalog/images/black_heart.svg' %}" />
-            </button>
-          </div>
-          <div class="d-none d-md-flex d-lg-flex">
-            <button
-              class="btn btn-primary btn-right btn-bike"
-              type="button"
-            >
-              В избранное
-          </button>
-          </div>
+          
+          {% if bike_favourites %}
+
+          <form name="formFavorite" method="post" class="d-flex">
+            {% csrf_token %}
+            <div class="d-none d-md-flex d-lg-flex">
+              <button
+                id="clickOnBtnFavorite{{bike_selected.pk}}"
+                class="btn btn-outline-primary btn-right btn-bike"
+                type="submit"
+              >
+                В избранном
+              </button>
+            </div>
+            <div class="d-flex">
+              <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+              <input type="hidden" name="favourite_or_star" value="favourite"/>
+              <button
+                class="btn btn-heart btn-heart-bike"
+                type="submit"
+              >
+                <img id="clickOnHeartFavorite{{bike_selected.pk}}" src="{% static 'catalog/images/grad_heart.svg' %}" />
+              </button>
+            </div>
+          </form>
+
+          {% else %}
+
+          <form name="formFavorite" method="post" class="d-flex">
+            {% csrf_token %}
+            <div class="d-none d-md-flex d-lg-flex">
+              <button
+                id="clickOnBtnFavorite{{bike_selected.pk}}"
+                class="btn btn-primary btn-right btn-bike"
+                type="submit"
+              >
+                В избранное
+              </button>
+            </div>
+            <div class="d-flex">
+              <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+              <input type="hidden" name="favourite_or_star" value="favourite"/>
+              <button
+                class="btn btn-heart btn-heart-bike"
+                type="submit"
+              >
+                <img id="clickOnHeartFavorite{{bike_selected.pk}}" src="{% static 'catalog/images/black_heart.svg' %}" />
+              </button>
+            </div>
+          </form>
+
+          {% endif %}
+            
         </div>
       </div>
     </div>
@@ -70,4 +110,38 @@
   {% endfor %}
   </div>
 </div>
+
+{% block javascript %}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+      $(document).ready(function () {
+          $('form[name=formFavorite]').submit(function () {
+              $.ajax({
+                  data: $(this).serialize(),
+                  url: "{{bike.get_absolute_url}}",
+                  type: "POST",
+                  dataType: "json",
+                  success: function (response) {
+                      if (response.is_taken == true) {
+                        if (response.is_added == true){
+                          $('#clickOnHeartFavorite' + response.bike_selected).attr('src', "{% static 'catalog/images/grad_heart.svg' %}");
+                          $('#clickOnBtnFavorite'+ response.bike_selected).removeClass('btn-primary').addClass('btn-outline-primary');
+                          $('#clickOnBtnFavorite'+ response.bike_selected).text('В избранном');
+                        }
+                        else {
+                          $('#clickOnHeartFavorite'+ response.bike_selected).attr('src', "{% static 'catalog/images/black_heart.svg' %}");
+                          $('#clickOnBtnFavorite'+ response.bike_selected).removeClass('btn-outline-primary').addClass('btn-primary');
+                          $('#clickOnBtnFavorite'+ response.bike_selected).text('В избранное');
+                        }
+                      }
+                  }
+              });
+              return false;
+          });
+      })
+  </script>
+
+{% endblock javascript %}
+
 {%endblock%}
