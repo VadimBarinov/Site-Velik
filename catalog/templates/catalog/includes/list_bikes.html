@@ -7,7 +7,7 @@
       <a class="onclick-card" href="{{bike.get_absolute_url}}">
         <div class="card">
           
-          {% if forloop.counter|divisibleby:2 %}
+          {% if bike.star_count == 0 %}
           <div class="card-star">
             <img src="{% static 'catalog/images/black_star.svg' %}" />
             <div class="text-grey">
@@ -18,7 +18,7 @@
           <div class="card-star">
             <img src="{% static 'catalog/images/grad_star.svg' %}" />
             <div>
-              &nbsp4,2
+              &nbsp{{ bike.star|floatformat:1 }}
             </div>
           </div>
           {% endif %}
@@ -89,11 +89,3 @@
     {% endfor %}
   </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-  var currentUrl = $(location).attr('href');
-  var black_heart = "{% static 'catalog/images/black_heart.svg' %}";
-  var grad_heart = "{% static 'catalog/images/grad_heart.svg' %}";
-</script>
-<script type="text/javascript" src="{% static 'catalog/js/add_del_favorites.js' %}"></script>

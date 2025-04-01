@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from django.db.models import F
 
 
 class BikeMark(models.Model):
@@ -22,6 +23,8 @@ class BikeModel(models.Model):
         blank=True,
         null=True
         )
+    star = models.FloatField(default=0)
+    star_count = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name
@@ -85,10 +88,38 @@ class BikeFavourites(models.Model):
     user = models.ForeignKey(
         get_user_model(),
         on_delete=models.PROTECT,
-        related_name='user'
+        related_name='user_favorite'
     )
     bike = models.ForeignKey(
         'BikeModel',
         on_delete=models.PROTECT,
-        related_name='bike'
+        related_name='bike_favorite'
     )
+
+
+class BikeStars(models.Model):
+    user = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.PROTECT,
+        related_name='user_star'
+    )
+    bike = models.ForeignKey(
+        'BikeModel',
+        on_delete=models.PROTECT,
+        related_name='bike_star'
+    )
+    star = models.FloatField()
+
+    def save(self, *args, **kwargs):
+        BikeModel.objects.filter(pk=self.bike.pk).update(
+            star=(F('star_count')*F('star')+self.star)/(F('star_count')+1),
+            star_count=F('star_count')+1,
+        )
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        BikeModel.objects.filter(pk=self.bike.pk).update(
+            star=(F('star_count')*F('star')-self.star)/(F('star_count')-1),
+            star_count=F('star_count')-1,
+        )
+        super().delete(*args, **kwargs)

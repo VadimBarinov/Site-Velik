@@ -18,14 +18,43 @@
     <div class="col-12 col-lg-6 p-3">
       <div class="d-flex row">
         <div class="d-flex bike-add col-8 col-md-6 col-lg-6">
-          <button class="btn btn-heart-bike" type="button">
-            <div class="bike-star">
-              <img src="{% static 'catalog/images/black_star.svg' %}" />
-              <div class="text-grey">
-                &nbspнет оценок
+
+            <button class="btn btn-heart-bike" type="button">
+              
+              {% if bike_selected.star_count == 0 %}
+              <div class="bike-star">
+                <img src="{% static 'catalog/images/black_star.svg' %}" />
+                <div class="text-grey">
+                  &nbspнет оценок
+                </div>
               </div>
-            </div>
-          </button>
+              {% else %}
+              <div class="bike-star">
+                <img src="{% static 'catalog/images/grad_star.svg' %}" />
+                <div>
+                  &nbsp{{ bike_selected.star|floatformat:1 }}
+                </div>
+              </div>
+              {% endif %}
+                
+              {% if bike_star %}
+              <div class="bike-my-star d-flex">
+                <div>
+                  моя оценка:
+                </div>
+                <div class="text-orange">
+                  &nbsp{{ bike_star|floatformat:1 }}
+                </div>
+              </div>
+              {% else %}
+              <div class="bike-my-star">
+                <div class="text-grey">
+                  оценить
+                </div>
+              </div>
+              {% endif %}
+            </button>
+
         </div>
         <div class="d-flex bike-add-favourites col-4 col-md-6 col-lg-6">
           
@@ -110,13 +139,5 @@
   {% endfor %}
   </div>
 </div>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-  var currentUrl = $(location).attr('href');
-  var black_heart = "{% static 'catalog/images/black_heart.svg' %}";
-  var grad_heart = "{% static 'catalog/images/grad_heart.svg' %}";
-</script>
-<script type="text/javascript" src="{% static 'catalog/js/add_del_favorites.js' %}"></script>
 
 {%endblock%}

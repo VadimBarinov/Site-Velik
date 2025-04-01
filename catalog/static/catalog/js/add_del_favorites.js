@@ -18,6 +18,9 @@ $(document).ready(function () {
                     $('#clickOnBtnFavorite'+ response.bike_selected).text('В избранное');
                   }
                 }
+                else {
+                  $(location).attr('href', login_url);
+                }
             }
         });
         return false;

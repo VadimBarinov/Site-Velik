@@ -371,6 +371,10 @@ body {
   color: #595959 !important;
 }
 
+.text-orange {
+  color: #ff7a00 !important;
+}
+
 .bike-img {
   display: flex;
   justify-content: center;
@@ -413,8 +417,16 @@ body {
 .bike-star {
   display: flex;
   color: black;
-  align-items: flex-end;
+  align-items: center;
   font-size: 18px !important;
+  padding: 0rem 0rem 0rem 0rem !important;
+}
+
+.bike-my-star {
+  display: flex;
+  color: black;
+  align-items: center;
+  font-size: 14px !important;
   padding: 0rem 0rem 0rem 0rem !important;
 }
 

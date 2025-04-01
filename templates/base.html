@@ -178,5 +178,13 @@
         <p class="text-footer-orange">&nbspVelik.</p>
       </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+      var currentUrl = $(location).attr('href');
+      var black_heart = "{% static 'catalog/images/black_heart.svg' %}";
+      var grad_heart = "{% static 'catalog/images/grad_heart.svg' %}";
+      var login_url = "{% url 'users:login' %}?next={{request.path}}"
+    </script>
+    <script type="text/javascript" src="{% static 'catalog/js/add_del_favorites.js' %}"></script>
   </body>
 </html>
