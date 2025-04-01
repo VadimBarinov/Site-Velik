@@ -7,4 +7,6 @@ function clickOnStar(id_star){
         $('#star-modal-' + i).attr('src', black_star);
     }
 
+    $('[name=count_stars]').attr('value', id_star)
+
 }

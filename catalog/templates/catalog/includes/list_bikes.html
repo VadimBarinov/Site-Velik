@@ -10,15 +10,17 @@
           {% if bike.star_count == 0 %}
           <div class="card-star">
             <img src="{% static 'catalog/images/black_star.svg' %}" />
+            <div>&nbsp</div>
             <div class="text-grey">
-              &nbspнет оценок
+              нет оценок
             </div>
           </div>
           {% else %}
           <div class="card-star">
             <img src="{% static 'catalog/images/grad_star.svg' %}" />
+            <div>&nbsp</div>
             <div>
-              &nbsp{{ bike.star|floatformat:1 }}
+              {{ bike.star|floatformat:1 }}
             </div>
           </div>
           {% endif %}

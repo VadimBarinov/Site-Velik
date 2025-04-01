@@ -35,14 +35,14 @@
             {% csrf_token %}
             <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
             <input type="hidden" name="favourite_or_star" value="delete_star"/>
-            <button type="button" class="btn btn-outline-primary">Удалить</button>
+            <button type="submit" class="btn btn-outline-primary">Удалить</button>
           </form>
           <form name="formAddStar" method="post" class="d-flex">
             {% csrf_token %}
             <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
             <input type="hidden" name="favourite_or_star" value="add_star"/>
             <input type="hidden" name="count_stars" value='0'/>
-            <button type="button" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
           </form>
         </div>
         {% else %}
@@ -74,7 +74,7 @@
             <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
             <input type="hidden" name="favourite_or_star" value="add_star"/>
             <input type="hidden" name="count_stars" value='0'/>
-            <button type="button" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-primary">Сохранить</button>
           </form>
         </div>
         {% endif %}
@@ -105,33 +105,39 @@
               
               {% if bike_selected.star_count == 0 %}
               <div class="bike-star">
-                <img src="{% static 'catalog/images/black_star.svg' %}" />
-                <div class="text-grey">
-                  &nbspнет оценок
+                <img id="bikeStarImg" src="{% static 'catalog/images/black_star.svg' %}" />
+                <div>&nbsp</div>
+                <div id="bikeStar" class="text-grey">
+                  нет оценок
                 </div>
               </div>
               {% else %}
               <div class="bike-star">
-                <img src="{% static 'catalog/images/grad_star.svg' %}" />
-                <div>
-                  &nbsp{{ bike_selected.star|floatformat:1 }}
+                <img id="bikeStarImg" src="{% static 'catalog/images/grad_star.svg' %}" />
+                <div>&nbsp</div>
+                <div id="bikeStar">
+                  {{ bike_selected.star|floatformat:1 }}
                 </div>
               </div>
               {% endif %}
                 
               {% if bike_star %}
               <div class="bike-my-star d-flex">
-                <div>
+                <div id="myStar">
                   моя оценка:
                 </div>
-                <div class="text-orange">
-                  &nbsp{{ bike_star|floatformat:1 }}
+                <div>&nbsp</div>
+                <div id="myStarValue" class="text-orange">
+                  {{ bike_star|floatformat:1 }}
                 </div>
               </div>
               {% else %}
-              <div class="bike-my-star">
-                <div class="text-grey">
+              <div class="bike-my-star d-flex">
+                <div id="myStar" class="text-grey">
                   оценить
+                </div>
+                <div>&nbsp</div>
+                <div id="myStarValue" class="text-orange">
                 </div>
               </div>
               {% endif %}

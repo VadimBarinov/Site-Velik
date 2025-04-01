@@ -97,6 +97,16 @@ class BikeFavourites(models.Model):
     )
 
 
+class PageQuerySet(models.QuerySet):
+    def delete(self):
+        return super().delete()
+
+
+class PageManager(models.Manager):
+    def get_queryset(self):
+        return PageQuerySet(model=self.model, using=self._db, hints=self._hints)
+
+
 class BikeStars(models.Model):
     user = models.ForeignKey(
         get_user_model(),
@@ -110,6 +120,8 @@ class BikeStars(models.Model):
     )
     star = models.FloatField()
 
+    objects = PageManager()
+
     def save(self, *args, **kwargs):
         BikeModel.objects.filter(pk=self.bike.pk).update(
             star=(F('star_count')*F('star')+self.star)/(F('star_count')+1),
@@ -118,8 +130,15 @@ class BikeStars(models.Model):
         super().save(*args, **kwargs)
 
     def delete(self, *args, **kwargs):
-        BikeModel.objects.filter(pk=self.bike.pk).update(
-            star=(F('star_count')*F('star')-self.star)/(F('star_count')-1),
-            star_count=F('star_count')-1,
-        )
+        current_bike = BikeModel.objects.filter(pk=self.bike.pk)
+        if current_bike.get().star_count < 2:
+            current_bike.update(
+                star=0,
+                star_count=0,
+            )
+        else:
+            current_bike.update(
+                star=(F('star_count')*F('star')-self.star)/(F('star_count')-1),
+                star_count=F('star_count')-1,
+            )
         super().delete(*args, **kwargs)

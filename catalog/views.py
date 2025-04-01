@@ -42,6 +42,59 @@ def add_del_favourites(current_user, current_bike):
             )
 
 
+def delete_star(current_user, current_bike):
+    if current_user.is_authenticated:
+        found_star = BikeStars.objects.filter(
+            Q(user__pk=current_user.pk) & Q(bike__pk=current_bike)
+        )
+        if found_star.exists():
+            found_star.get().delete()
+
+        star_bike = BikeModel.objects.get(pk=current_bike).star
+        return JsonResponse(
+            {
+                'is_taken': True,
+                'star_bike': star_bike,
+            }
+        )
+    else:
+        return JsonResponse(
+            {
+                'is_taken': False,
+            }
+        )
+
+
+def add_star(current_user, current_bike, current_star):
+    if current_user.is_authenticated:
+        found_star = BikeStars.objects.filter(
+            Q(user__pk=current_user.pk) & Q(bike__pk=current_bike)
+        )
+        if found_star.exists():
+            found_star.get().delete()
+
+        save_star = BikeStars(
+                user=current_user,
+                bike=BikeModel.objects.get(pk=current_bike),
+                star=current_star,
+        )
+        save_star.save()
+        star_bike = BikeModel.objects.get(pk=current_bike).star
+        return JsonResponse(
+            {
+                'is_taken': True,
+                'star_value': current_star,
+                'star_bike': star_bike,
+            }
+        )
+    else:
+        return JsonResponse(
+                {
+                    'is_taken': False,
+                }
+            )
+
+
 class HomePage(DataMixin, ListView):
     model = BikeModel
     template_name = 'catalog/index.html'
@@ -67,9 +120,6 @@ class HomePage(DataMixin, ListView):
         favourite_or_star = self.request.POST.get('favourite_or_star')
         if favourite_or_star == 'favourite':
             return add_del_favourites(current_user, current_bike)
-        elif favourite_or_star == 'star':
-            return 'Загушка'
-            # здесь будет обработчик выставления оценки
 
 
 class ShowCatalog(DataMixin, ListView):
@@ -105,9 +155,6 @@ class ShowCatalog(DataMixin, ListView):
         favourite_or_star = self.request.POST.get('favourite_or_star')
         if favourite_or_star == 'favourite':
             return add_del_favourites(current_user, current_bike)
-        elif favourite_or_star == 'star':
-            return 'Загушка'
-            # здесь будет обработчик выставления оценки
 
 
 class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
@@ -141,9 +188,6 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
         favourite_or_star = self.request.POST.get('favourite_or_star')
         if favourite_or_star == 'favourite':
             return add_del_favourites(current_user, current_bike)
-        elif favourite_or_star == 'star':
-            return 'Загушка'
-            # здесь будет обработчик выставления оценки
 
 
 class ShowStars(LoginRequiredMixin, DataMixin, ListView):
@@ -177,9 +221,6 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
         favourite_or_star = self.request.POST.get('favourite_or_star')
         if favourite_or_star == 'favourite':
             return add_del_favourites(current_user, current_bike)
-        elif favourite_or_star == 'star':
-            return 'Загушка'
-            # здесь будет обработчик выставления оценки
 
 
 class ShowAbout(DataMixin, TemplateView):
@@ -214,9 +255,11 @@ class ShowBike(DataMixin, DetailView):
     def post(self, *args, **kwargs):
         current_user = self.request.user
         current_bike = self.request.POST.get('bike_selected')
+        current_star = self.request.POST.get('count_stars')
         favourite_or_star = self.request.POST.get('favourite_or_star')
         if favourite_or_star == 'favourite':
             return add_del_favourites(current_user, current_bike)
-        elif favourite_or_star == 'star':
-            return 'Загушка'
-            # здесь будет обработчик выставления оценки
+        elif favourite_or_star == 'delete_star':
+            return delete_star(current_user, current_bike)
+        elif favourite_or_star == 'add_star':
+            return add_star(current_user, current_bike, current_star)
