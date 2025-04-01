@@ -41,7 +41,7 @@
             {% csrf_token %}
             <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
             <input type="hidden" name="favourite_or_star" value="add_star"/>
-            <input type="hidden" name="count_stars" value='0'/>
+            <input type="hidden" name="count_stars" value="{{bike_star}}"/>
             <button type="submit" class="btn btn-primary">Сохранить</button>
           </form>
         </div>
