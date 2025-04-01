@@ -3,6 +3,70 @@
 {%load static%} 
 {%block content%}
 <div class="container">
+
+  <div class="modal fade" id="AddStarModal" tabindex="-1" aria-labelledby="AddStarModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        
+        {% if bike_star %}
+        <div class="modal-header">
+          <h1 class="modal-title" id="AddStarModalLabel">Изменить оценку</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex">
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star1" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star2" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star3" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star4" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star5" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary">Удалить</button>
+          <button type="button" class="btn btn-primary">Сохранить</button>
+        </div>
+        {% else %}
+        <div class="modal-header">
+          <h1 class="modal-title" id="AddStarModalLabel">Оценить</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body d-flex">
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star1" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star2" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star3" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star4" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+          <button class="btn btn-star-modal">
+            <img class="star-modal" id="star5" src="{% static 'catalog/images/black_star.svg' %}" />
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="button" class="btn btn-primary">Сохранить</button>
+        </div>
+        {% endif %}
+          
+      </div>
+    </div>
+  </div>
+  
+  
   <div class="border-bottom row d-flex pt-3 pb-5">
     <div class="col-0 col-lg-6"></div>
     <div class="bike-title col-12 col-lg-6 ps-3 pe-3 pb-3 border-bottom">
@@ -19,7 +83,8 @@
       <div class="d-flex row">
         <div class="d-flex bike-add col-8 col-md-6 col-lg-6">
 
-            <button class="btn btn-heart-bike" type="button">
+            <button class="btn btn-heart-bike" type="button"
+            data-bs-toggle="modal" data-bs-target="#AddStarModal">
               
               {% if bike_selected.star_count == 0 %}
               <div class="bike-star">
@@ -62,6 +127,8 @@
 
           <form name="formFavorite" method="post" class="d-flex">
             {% csrf_token %}
+            <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+            <input type="hidden" name="favourite_or_star" value="favourite"/>
             <div class="d-none d-md-flex d-lg-flex">
               <button
                 id="clickOnBtnFavorite{{bike_selected.pk}}"
@@ -72,8 +139,6 @@
               </button>
             </div>
             <div class="d-flex">
-              <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
-              <input type="hidden" name="favourite_or_star" value="favourite"/>
               <button
                 class="btn btn-heart btn-heart-bike"
                 type="submit"
@@ -87,6 +152,8 @@
 
           <form name="formFavorite" method="post" class="d-flex">
             {% csrf_token %}
+            <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+            <input type="hidden" name="favourite_or_star" value="favourite"/>
             <div class="d-none d-md-flex d-lg-flex">
               <button
                 id="clickOnBtnFavorite{{bike_selected.pk}}"
@@ -97,8 +164,6 @@
               </button>
             </div>
             <div class="d-flex">
-              <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
-              <input type="hidden" name="favourite_or_star" value="favourite"/>
               <button
                 class="btn btn-heart btn-heart-bike"
                 type="submit"

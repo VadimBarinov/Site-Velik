@@ -493,3 +493,26 @@ body {
 .profile-link:hover {
   opacity: 0.7;
 }
+
+.modal-content {
+  border: none !important;
+}
+
+.modal-title {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.star-modal {
+  width: 3rem;
+}
+
+.btn-star-modal {
+  padding: 0.6rem !important;
+}
+
+.modal-body {
+  padding-top: 1.5rem !important;
+  padding-bottom: 1.5rem !important;
+  justify-content: center !important;
+}
