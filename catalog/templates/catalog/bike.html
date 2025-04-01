@@ -14,25 +14,36 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex">
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star1" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(1)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-1" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star2" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(2)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-2" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star3" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(3)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-3" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star4" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(4)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-4" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star5" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(5)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-5" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-primary">Удалить</button>
-          <button type="button" class="btn btn-primary">Сохранить</button>
+          <form name="formDeleteStar" method="post" class="d-flex">
+            {% csrf_token %}
+            <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+            <input type="hidden" name="favourite_or_star" value="delete_star"/>
+            <button type="button" class="btn btn-outline-primary">Удалить</button>
+          </form>
+          <form name="formAddStar" method="post" class="d-flex">
+            {% csrf_token %}
+            <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+            <input type="hidden" name="favourite_or_star" value="add_star"/>
+            <input type="hidden" name="count_stars" value='0'/>
+            <button type="button" class="btn btn-primary">Сохранить</button>
+          </form>
         </div>
         {% else %}
         <div class="modal-header">
@@ -40,25 +51,31 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex">
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star1" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(1)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-1" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star2" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(2)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-2" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star3" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(3)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-3" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star4" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(4)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-4" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button class="btn btn-star-modal">
-            <img class="star-modal" id="star5" src="{% static 'catalog/images/black_star.svg' %}" />
+          <button onclick="clickOnStar(5)" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-5" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Закрыть</button>
-          <button type="button" class="btn btn-primary">Сохранить</button>
+          <form name="formAddStar" method="post" class="d-flex">
+            {% csrf_token %}
+            <input type="hidden" name="bike_selected" value="{{bike_selected.pk}}"/>
+            <input type="hidden" name="favourite_or_star" value="add_star"/>
+            <input type="hidden" name="count_stars" value='0'/>
+            <button type="button" class="btn btn-primary">Сохранить</button>
+          </form>
         </div>
         {% endif %}
           
@@ -83,7 +100,7 @@
       <div class="d-flex row">
         <div class="d-flex bike-add col-8 col-md-6 col-lg-6">
 
-            <button class="btn btn-heart-bike" type="button"
+            <button onclick="clickOnStar(parseInt('{{bike_star}}'))" class="btn btn-heart-bike" type="button"
             data-bs-toggle="modal" data-bs-target="#AddStarModal">
               
               {% if bike_selected.star_count == 0 %}

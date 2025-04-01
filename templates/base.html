@@ -183,8 +183,11 @@
       var currentUrl = $(location).attr('href');
       var black_heart = "{% static 'catalog/images/black_heart.svg' %}";
       var grad_heart = "{% static 'catalog/images/grad_heart.svg' %}";
+      var black_star = "{% static 'catalog/images/black_star.svg' %}";
+      var grad_star = "{% static 'catalog/images/grad_star.svg' %}";
       var login_url = "{% url 'users:login' %}?next={{request.path}}"
     </script>
     <script type="text/javascript" src="{% static 'catalog/js/add_del_favorites.js' %}"></script>
+    <script type="text/javascript" src="{% static 'catalog/js/functions.js' %}"></script>
   </body>
 </html>
