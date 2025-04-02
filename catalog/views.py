@@ -50,11 +50,9 @@ def delete_star(current_user, current_bike):
         if found_star.exists():
             found_star.get().delete()
 
-        star_bike = BikeModel.objects.get(pk=current_bike).star
         return JsonResponse(
             {
                 'is_taken': True,
-                'star_bike': star_bike,
             }
         )
     else:
