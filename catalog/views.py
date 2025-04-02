@@ -175,8 +175,9 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['input_value'] = self.request.GET.get('query')
+        current_user = self.request.user
         context['bike_favourites'] = [
-            bike.pk for bike in context['bikes']
+            bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=current_user.pk)
             ]
         return context
 
@@ -208,8 +209,9 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['input_value'] = self.request.GET.get('query')
+        current_user = self.request.user
         context['bike_favourites'] = [
-            bike.pk for bike in context['bikes']
+            bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=current_user.pk)
             ]
         return context
 

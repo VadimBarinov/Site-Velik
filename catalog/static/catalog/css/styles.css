@@ -521,3 +521,46 @@ body {
 .btn-close:focus {
   box-shadow: none !important;
 }
+
+.empty-favorites {
+  padding-top: 10rem;
+}
+
+.empty-favorites h1 {
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  justify-content: center;
+}
+
+.empty-favorites p {
+  color: #595959;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+}
+
+.button-catalog-favorites {
+  display: flex;
+  justify-content: center;
+}
+
+.empty-bikes {
+  padding-top: 10rem;
+  padding-bottom: 5rem;
+}
+
+.empty-bikes p {
+  color: #595959;
+  padding-bottom: 0.5rem;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+}
