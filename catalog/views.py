@@ -178,7 +178,7 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
         current_user = self.request.user
         context['bike_favourites'] = [
             bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=current_user.pk)
-            ]
+        ]
         return context
 
     def post(self, *args, **kwargs):
@@ -212,7 +212,12 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
         current_user = self.request.user
         context['bike_favourites'] = [
             bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=current_user.pk)
-            ]
+        ]
+        bike_stars = BikeStars.objects.filter(user__pk=current_user.pk)
+        bike_stars_set = {}
+        for bike in bike_stars:
+            bike_stars_set[bike.bike.pk] = bike.star
+        context['bike_stars'] = bike_stars_set
         return context
 
     def post(self, *args, **kwargs):
