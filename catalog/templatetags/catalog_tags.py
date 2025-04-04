@@ -46,6 +46,11 @@ def get_random_characteristics(bikes, bike_slug):
     return result
 
 
+@register.simple_tag
+def my_range(first, second):
+    return list(range(first, second))
+
+
 @register.filter
 def get_value_from_dict(dict_data, key):
     return dict_data.get(key)

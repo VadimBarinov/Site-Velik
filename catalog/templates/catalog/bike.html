@@ -14,21 +14,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex">
-          <button onclick="clickOnStar(1)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-1" src="{% static 'catalog/images/black_star.svg' %}" />
+
+          {% my_range 1 6 as range_massive %}
+          {% for i in range_massive %}
+          <button onclick="clickOnStar(parseInt('{{i}}'))" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-{{i}}" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button onclick="clickOnStar(2)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-2" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(3)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-3" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(4)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-4" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(5)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-5" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
+          {% endfor %}
+          
         </div>
         <div class="modal-footer">
           <form name="formDeleteStar" method="post" class="d-flex">
@@ -51,21 +44,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body d-flex">
-          <button onclick="clickOnStar(1)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-1" src="{% static 'catalog/images/black_star.svg' %}" />
+
+          {% my_range 1 6 as range_massive %}
+          {% for i in range_massive %}
+          <button onclick="clickOnStar(parseInt('{{i}}'))" class="btn btn-star-modal">
+            <img class="star-modal" id="star-modal-{{i}}" src="{% static 'catalog/images/black_star.svg' %}" />
           </button>
-          <button onclick="clickOnStar(2)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-2" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(3)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-3" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(4)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-4" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
-          <button onclick="clickOnStar(5)" class="btn btn-star-modal">
-            <img class="star-modal" id="star-modal-5" src="{% static 'catalog/images/black_star.svg' %}" />
-          </button>
+          {% endfor %}
+          
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Закрыть</button>

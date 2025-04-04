@@ -32,6 +32,13 @@ class BikeModel(models.Model):
     def get_absolute_url(self):
         return reverse('bike', kwargs={'bike_slug': self.slug})
 
+    def sort_by_fav_or_stars(set_bikes, set_fav_or_stars):
+        return sorted(
+            set_bikes,
+            key=lambda x: set_fav_or_stars.get(bike=x).pk,
+            reverse=True
+        )
+
 
 class BikeModification(models.Model):
     bike_model = models.OneToOneField(

@@ -2,7 +2,7 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView, DetailView, ListView
 from catalog.models import BikeModel, BikeCharacteristicValue, BikeFavourites, BikeStars
 from catalog.utils import DataMixin
-from django.db.models import Q
+from django.db.models import Q, F
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 
@@ -162,15 +162,18 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
     paginate_by = 15
 
     def get_queryset(self):
+        set_bike_favorite = BikeFavourites.objects.filter(
+            user__pk=self.request.user.pk
+        )
+        object_list = BikeModel.objects.filter(
+            pk__in=[bike.bike.pk for bike in set_bike_favorite]
+        )
         query = self.request.GET.get('query')
         if query:
-            object_list = BikeModel.objects.filter(
-                pk__in=[bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=self.request.user.pk)]
-            ).filter(Q(mark__name__icontains=query) | Q(name__icontains=query))
-            return object_list
-        return BikeModel.objects.filter(
-            pk__in=[bike.bike.pk for bike in BikeFavourites.objects.filter(user__pk=self.request.user.pk)]
-        )
+            object_list = object_list.filter(
+                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            )
+        return BikeModel.sort_by_fav_or_stars(object_list, set_bike_favorite)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -196,15 +199,18 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
     paginate_by = 15
 
     def get_queryset(self):
+        set_bike_stars = BikeStars.objects.filter(
+            user__pk=self.request.user.pk
+        )
+        object_list = BikeModel.objects.filter(
+            pk__in=[bike.bike.pk for bike in set_bike_stars]
+        )
         query = self.request.GET.get('query')
         if query:
-            object_list = BikeModel.objects.filter(
-                pk__in=[bike.bike.pk for bike in BikeStars.objects.filter(user__pk=self.request.user.pk)]
-            ).filter(Q(mark__name__icontains=query) | Q(name__icontains=query))
-            return object_list
-        return BikeModel.objects.filter(
-            pk__in=[bike.bike.pk for bike in BikeStars.objects.filter(user__pk=self.request.user.pk)]
-        )
+            object_list = object_list.filter(
+                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            )
+        return BikeModel.sort_by_fav_or_stars(object_list, set_bike_stars)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
