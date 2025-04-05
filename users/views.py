@@ -20,7 +20,7 @@ class RegisterUser(CreateView):
     extra_context = {
         'title': 'Регистрация'
     }
-    success_url = reverse_lazy('users:login')
+    success_url = reverse_lazy('users:register_done')
 
 
 class ProfileUser(LoginRequiredMixin, UpdateView):
