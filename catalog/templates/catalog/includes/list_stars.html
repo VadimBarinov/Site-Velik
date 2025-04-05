@@ -65,7 +65,7 @@
                             
                         </div>
                     </div>
-                    <div class="d-flex row">
+                    <div class="d-flex justify-content-center">
                       
                       {% if bike.pk in bike_favourites %}
         
@@ -73,15 +73,10 @@
                         {% csrf_token %}
                         <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
                         <input type="hidden" name="favourite_or_star" value="favourite"/>
-                        <div class="col-2 d-flex align-items-center">
-                          <button class="btn btn-heart" type="submit">
-                            <img id="clickOnHeartFavorite{{bike.pk}}" src="{% static 'catalog/images/grad_heart.svg' %}" />
-                          </button>
-                        </div>
-                        <div class="col-10 d-flex">
+                        <div>
                           <button
                             id="clickOnBtnFavorite{{bike.pk}}"
-                            class="btn btn-outline-primary btn-right btn-card"
+                            class="btn btn-outline-primary btn-card"
                             type="submit"
                           >
                             В избранном
@@ -95,15 +90,10 @@
                         {% csrf_token %}
                         <input type="hidden" name="bike_selected" value="{{bike.pk}}"/>
                         <input type="hidden" name="favourite_or_star" value="favourite"/>
-                        <div class="col-2 d-flex align-items-center">
-                          <button class="btn btn-heart" type="submit">
-                            <img id="clickOnHeartFavorite{{bike.pk}}" src="{% static 'catalog/images/black_heart.svg' %}" />
-                          </button>
-                        </div>
-                        <div class="col-10 d-flex">
+                        <div>
                           <button
                             id="clickOnBtnFavorite{{bike.pk}}"
-                            class="btn btn-primary btn-right btn-card"
+                            class="btn btn-primary btn-card"
                             type="submit"
                           >
                             В избранное
