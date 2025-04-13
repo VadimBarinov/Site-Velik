@@ -2,7 +2,6 @@ import random
 from django import template
 from catalog.models import BikeModel, BikeCharacteristicValue
 from velik import settings
-from velik import settings
 
 
 # регистрация новых тегов
