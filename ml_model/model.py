@@ -1,6 +1,7 @@
 import pandas as pd
+from velik.settings import BASE_DIR
 
-df = pd.read_csv('ml_model/df.csv', index_col=0)
+df = pd.read_csv(BASE_DIR /'ml_model/df.csv', index_col=0)
 
 df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(' ', ',')
 df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(',,', ',')
