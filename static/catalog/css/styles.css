@@ -592,3 +592,11 @@ body {
     width: 100% !important;
   }
 }
+
+.my-recommend {
+  font-size: 28px;
+  font-weight: 700;
+  color: black;
+  padding-top: 2rem;
+  padding-bottom: 1rem;
+}

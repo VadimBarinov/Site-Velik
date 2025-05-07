@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.db.models import F
+import pandas as pd
 
 
 class BikeMark(models.Model):
@@ -38,6 +39,21 @@ class BikeModel(models.Model):
             key=lambda x: set_fav_or_stars.get(bike=x).pk,
             reverse=True
         )
+    
+    def get_pandas_df():
+        bikes = BikeModel.objects.all()
+        df = []
+        for bike in bikes:
+            bike_characteristics = bike.bike_model.bike_modification.all()
+            bike_characteristics_string = ''
+            for char in bike_characteristics:
+                bike_characteristics_string += str(char.value).replace(' ', '') + ','
+            df.append([bike.pk, bike_characteristics_string[:-1]])
+        
+        df = pd.DataFrame(df, columns=['bike_id', 'bike_characteristics_string'])
+        df.to_csv('ml_model/df.csv')
+        
+        return df
 
 
 class BikeModification(models.Model):

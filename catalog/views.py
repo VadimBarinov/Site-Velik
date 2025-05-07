@@ -4,6 +4,7 @@ from catalog.models import BikeModel, BikeCharacteristicValue, BikeFavourites, B
 from catalog.utils import DataMixin
 from django.db.models import Q, F
 from django.contrib.auth.mixins import LoginRequiredMixin
+import ml_model.model as ml_model
 
 
 def add_del_favourites(current_user, current_bike):
@@ -247,20 +248,33 @@ class ShowBike(DataMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        
+        current_user = self.request.user
         title = context['bike_selected'].mark.name + ' ' + context['bike_selected'].name
         bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
-        bike_favourites = BikeFavourites.objects.filter(Q(user__pk=self.request.user.pk) & Q(bike__pk=context['bike_selected'].pk)).exists()
-        bike_star = BikeStars.objects.filter(Q(user__pk=self.request.user.pk) & Q(bike__pk=context['bike_selected'].pk))
+        current_bike_favourites = BikeFavourites.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk)).exists()
+        bike_star = BikeStars.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk))
+        recommend = ml_model.recommend(context['bike_selected'].pk)
+        bike_favourites = [
+            bike.bike.pk for bike in BikeFavourites.objects.filter(
+                Q(user__pk=current_user.pk) & Q(bike__pk__in=recommend)
+            )
+        ]
+        bikes = BikeModel.objects.filter(Q(pk__in=recommend))
+        
         if bike_star.exists():
             bike_star = bike_star.get().star
         else:
             bike_star = False
+            
         return self.get_mixin_context(
             context,
             title=title,
             bike_characteristics=bike_characteristics,
-            bike_favourites=bike_favourites,
+            current_bike_favourites=current_bike_favourites,
             bike_star=bike_star,
+            bike_favourites=bike_favourites,
+            bikes=bikes,
         )
 
     def post(self, *args, **kwargs):
