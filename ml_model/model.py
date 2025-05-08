@@ -1,4 +1,5 @@
 import pandas as pd
+import random
 from velik.settings import BASE_DIR
 
 df = pd.read_csv(BASE_DIR /'ml_model/df.csv', index_col=0)
@@ -39,13 +40,22 @@ similarity = cosine_similarity(vectors)
 def recommend(bike_id):
     bike_index = df[df['bike_id'] == bike_id].index[0]
     distances = similarity[bike_index]
-    # получаем рекомендации
-    bike_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])[:4]
+    # получаем рекомендации, исключая переданный велик
+    bike_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])
 
     result = []
-    for i in bike_list:
-        result.append(int(df.iloc[i[0]]['bike_id']))
-    # исключаем переданный велик
+
+    for i in bike_list[:3]:
+      result.append(int(df.iloc[i[0]]['bike_id']))
+      bike_list.remove(i)
+
     result.remove(bike_id)
-    
-    return result[:3]
+    result = result[:2]
+
+    result.append(int(df.iloc[
+        random.choice(bike_list)[0]
+    ]['bike_id']))
+
+    random.shuffle(result)
+
+    return result
