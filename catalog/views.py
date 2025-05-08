@@ -2,11 +2,11 @@ from django.http import JsonResponse
 from django.views.generic import TemplateView, DetailView, ListView
 from catalog.models import BikeModel, BikeCharacteristicValue, BikeFavourites, BikeStars
 from catalog.utils import DataMixin
-from django.db.models import Q, F
+from django.db.models import Q, F, Value, CharField
+from django.db.models.functions import Concat
 from django.contrib.auth.mixins import LoginRequiredMixin
 import ml_model.model as ml_model
 import json
-from django.core.files import File
 
 
 def add_del_favourites(current_user, current_bike):
@@ -133,8 +133,10 @@ class ShowCatalog(DataMixin, ListView):
     def get_queryset(self):
         query = self.request.GET.get('query')
         if query:
-            object_list = BikeModel.objects.filter(
-                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            object_list = BikeModel.objects.annotate(
+                mark_and_name=Concat(F('mark__name'), Value(' '), F('name'), output_field=CharField())
+            ).filter(
+                Q(mark_and_name__icontains=query)
             )
             return object_list
         return BikeModel.objects.all()
@@ -173,8 +175,10 @@ class ShowFavourites(LoginRequiredMixin, DataMixin, ListView):
         )
         query = self.request.GET.get('query')
         if query:
-            object_list = object_list.filter(
-                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            object_list = object_list.annotate(
+                mark_and_name=Concat(F('mark__name'), Value(' '), F('name'), output_field=CharField())
+            ).filter(
+                Q(mark_and_name__icontains=query)
             )
         return BikeModel.sort_by_fav_or_stars(object_list, set_bike_favorite)
 
@@ -210,8 +214,10 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
         )
         query = self.request.GET.get('query')
         if query:
-            object_list = object_list.filter(
-                Q(mark__name__icontains=query) | Q(name__icontains=query)
+            object_list = object_list.annotate(
+                mark_and_name=Concat(F('mark__name'), Value(' '), F('name'), output_field=CharField())
+            ).filter(
+                Q(mark_and_name__icontains=query)
             )
         return BikeModel.sort_by_fav_or_stars(object_list, set_bike_stars)
 
