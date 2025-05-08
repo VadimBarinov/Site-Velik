@@ -1,61 +1,16 @@
-import pandas as pd
-import random
-from velik.settings import BASE_DIR
+from database import get_db
+from load_data import LoadData
+from recommendations import Recommendations
 
-df = pd.read_csv(BASE_DIR /'ml_model/df.csv', index_col=0)
+# когда буду делать api, переписать под async
+def get_recommend(bike_id):
+    db = get_db()
 
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(' ', ',')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(',,', ',')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(':', '')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace('_', '')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace('(', '')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].str.replace(')', '')
-df['bike_characteristics_string'] = df['bike_characteristics_string'].apply(lambda x: x.lower())
+    load_data = LoadData()
+    load_data.load_bikes_data(next(db))
+    load_data.data_preparation()
 
-from sklearn.feature_extraction.text import CountVectorizer
+    recommendations = Recommendations()
+    recommendations.calc_recommendations(load_data.df, bike_id)
 
-# создание вектора слов (токенов)
-cv = CountVectorizer()
-vectors = cv.fit_transform(df['bike_characteristics_string']).toarray()
-
-from nltk.stem.porter import PorterStemmer
-
-# приведение слов к стему (корневому слову)
-ps = PorterStemmer()
-
-def stem(text):
-    y = []
-    for i in text.split():
-        y.append(ps.stem(i))
-    return " ".join(y)
-
-
-df['bike_characteristics_string'] = df['bike_characteristics_string'].apply(stem)
-
-from sklearn.metrics.pairwise import cosine_similarity
-
-similarity = cosine_similarity(vectors)
-
-# возвращает id великов
-def recommend(bike_id):
-    bike_index = df[df['bike_id'] == bike_id].index[0]
-    distances = similarity[bike_index]
-    # получаем рекомендации, исключая переданный велик
-    bike_list = sorted(list(enumerate(distances)), reverse=True, key=lambda x: x[1])
-
-    result = []
-
-    for i in bike_list[:3]:
-      result.append(int(df.iloc[i[0]]['bike_id']))
-      bike_list.remove(i)
-
-    result.remove(bike_id)
-    result = result[:2]
-
-    result.append(int(df.iloc[
-        random.choice(bike_list)[0]
-    ]['bike_id']))
-
-    random.shuffle(result)
-
-    return result
+    return recommendations.recommend
