@@ -256,12 +256,14 @@ class ShowBike(DataMixin, DetailView):
         bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
         current_bike_favourites = BikeFavourites.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk)).exists()
         bike_star = BikeStars.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk))
-        # нужно переделать, так как не видит изображение
-        bikes = json.loads(ml_model.get_recommend(context['bike_selected'].pk))
+        bikes = [
+            BikeModel(**item)
+            for item in json.loads(ml_model.get_recommend(context['bike_selected'].pk))
+        ]
         bike_favourites = [
             bike.bike.pk for bike in BikeFavourites.objects.filter(
                 Q(user__pk=current_user.pk) &
-                Q(bike__pk__in=[item['id'] for item in bikes])
+                Q(bike__pk__in=[item.pk for item in bikes])
             )
         ]
         
