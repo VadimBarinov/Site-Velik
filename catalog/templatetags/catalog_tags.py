@@ -19,7 +19,7 @@ def find_image(image_url):
 
 @register.inclusion_tag('catalog/carousel.html')
 def show_carousel():
-    bikes = BikeModel.objects.all()[:3]
+    bikes = BikeModel.objects.order_by('?')[:3]
     bikes_characteristics = {}
 
     for item in bikes:
