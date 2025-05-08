@@ -1,6 +1,7 @@
-from database import get_db
-from load_data import LoadData
-from recommendations import Recommendations
+from .database import get_db
+from .load_data import LoadData
+from .recommendations import Recommendations
+import json
 
 # когда буду делать api, переписать под async
 def get_recommend(bike_id):
@@ -13,4 +14,4 @@ def get_recommend(bike_id):
     recommendations = Recommendations()
     recommendations.calc_recommendations(load_data.df, bike_id)
 
-    return recommendations.recommend
+    return json.dumps(recommendations.recommend)

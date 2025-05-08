@@ -5,6 +5,8 @@ from catalog.utils import DataMixin
 from django.db.models import Q, F
 from django.contrib.auth.mixins import LoginRequiredMixin
 import ml_model.model as ml_model
+import json
+from django.core.files import File
 
 
 def add_del_favourites(current_user, current_bike):
@@ -254,13 +256,14 @@ class ShowBike(DataMixin, DetailView):
         bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
         current_bike_favourites = BikeFavourites.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk)).exists()
         bike_star = BikeStars.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk))
-        recommend = ml_model.recommend(context['bike_selected'].pk)
+        # нужно переделать, так как не видит изображение
+        bikes = json.loads(ml_model.get_recommend(context['bike_selected'].pk))
         bike_favourites = [
             bike.bike.pk for bike in BikeFavourites.objects.filter(
-                Q(user__pk=current_user.pk) & Q(bike__pk__in=recommend)
+                Q(user__pk=current_user.pk) &
+                Q(bike__pk__in=[item['id'] for item in bikes])
             )
         ]
-        bikes = BikeModel.objects.filter(Q(pk__in=recommend))
         
         if bike_star.exists():
             bike_star = bike_star.get().star

@@ -1,9 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from typing import Generator
-import db_config
+from .db_config import DATABASES
 
-settings = db_config.DATABASES['default']
+settings = DATABASES['default']
 
 # Создаем строку подключения к базе данных
 DATABASE_URL = f"mysql+pymysql://{settings['USER']}:{settings['PASSWORD']}@{settings['HOST']}:{settings['PORT']}/{settings['NAME']}"
