@@ -33,6 +33,7 @@ class BikeModel(models.Model):
     def get_absolute_url(self):
         return reverse('bike', kwargs={'bike_slug': self.slug})
 
+    @staticmethod
     def sort_by_fav_or_stars(set_bikes, set_fav_or_stars):
         return sorted(
             set_bikes,
@@ -75,6 +76,7 @@ class BikeCharacteristicValue(models.Model):
     def __str__(self):
         return str(self.pk)
 
+    @staticmethod
     def get_bike_characteristics(bike):
         id_parents = BikeCharacteristic.objects.filter(id_parent=None)
         bike_characteristics = {}
