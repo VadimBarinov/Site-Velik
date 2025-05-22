@@ -5,8 +5,20 @@ from catalog.utils import DataMixin
 from django.db.models import Q, F, Value, CharField
 from django.db.models.functions import Concat
 from django.contrib.auth.mixins import LoginRequiredMixin
-import ml_model.model as ml_model
-import json
+import requests
+
+
+API_URL = "http://127.0.0.1:8080/recommendations/"
+
+
+def get_api_recommendations(bike_id):
+    url = f"{API_URL}?bike_id={bike_id}"
+    try:  
+        response = requests.post(url)
+        if response and response.status_code == 200:
+            return response.json()
+    except:
+        return []
 
 
 def add_del_favourites(current_user, current_bike):
@@ -260,11 +272,15 @@ class ShowBike(DataMixin, DetailView):
         current_user = self.request.user
         title = context['bike_selected'].mark.name + ' ' + context['bike_selected'].name
         bike_characteristics = BikeCharacteristicValue.get_bike_characteristics(context['bike_selected'])
-        current_bike_favourites = BikeFavourites.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk)).exists()
+        current_bike_favourites = BikeFavourites.objects.filter(
+            Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk)
+        ).exists()
         bike_star = BikeStars.objects.filter(Q(user__pk=current_user.pk) & Q(bike__pk=context['bike_selected'].pk))
+        
+        recommendations_bikes = get_api_recommendations(context['bike_selected'].pk)
         bikes = [
             BikeModel(**item)
-            for item in json.loads(ml_model.get_recommend(context['bike_selected'].pk))
+            for item in recommendations_bikes
         ]
         bike_favourites = [
             bike.bike.pk for bike in BikeFavourites.objects.filter(

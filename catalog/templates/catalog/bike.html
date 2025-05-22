@@ -213,13 +213,18 @@
   {% endfor %}
   </div>
 </div>
-<div class="container my-recommend">
-  <div>
-    <p>
-      Рекомендуем также
-    </p>
+
+
+{% if bikes %}
+  <div class="container my-recommend">
+    <div>
+      <p>
+        Рекомендуем также
+      </p>
+    </div>
   </div>
-</div>
+{% endif %}
+  
 
 {% include 'catalog/includes/list_bikes.html' %}
 
