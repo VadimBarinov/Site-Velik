@@ -14,7 +14,7 @@ API_URL = "http://127.0.0.1:8080/recommendations/"
 def get_api_recommendations(bike_id):
     url = f"{API_URL}?bike_id={bike_id}"
     try:  
-        response = requests.post(url)
+        response = requests.get(url)
         if response and response.status_code == 200:
             return response.json()
     except:
