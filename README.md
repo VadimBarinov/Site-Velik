@@ -20,6 +20,9 @@
 ## Страница велосипеда
 ![](github_images/GT_Aggressor_(2009).png) 
 
+## О себе
+![](github_images/О_себе.png) 
+
 ## Профиль пользователя
 ![](github_images/Профиль_пользователя.png) 
 

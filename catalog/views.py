@@ -257,7 +257,7 @@ class ShowStars(LoginRequiredMixin, DataMixin, ListView):
 
 class ShowAbout(DataMixin, TemplateView):
     template_name = 'catalog/about.html'
-    title_page = 'О нас'
+    title_page = 'О себе'
 
 
 class ShowBike(DataMixin, DetailView):

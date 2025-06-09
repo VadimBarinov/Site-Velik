@@ -12,7 +12,7 @@ menu = [
         'url': 'favourites',
     },
     {
-        'title': 'О нас',
+        'title': 'О себе',
         'url': 'about',
     },
 ]

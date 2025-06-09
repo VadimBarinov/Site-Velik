@@ -600,3 +600,45 @@ body {
   padding-top: 2rem;
   padding-bottom: 1rem;
 }
+
+.text-about-16 {
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
+
+.about-card-container {
+  padding: 1.5rem 1.5rem 1.5rem 1.5rem;
+  font-size: 14px;
+  font-weight: 500;
+  border-spacing: 0;
+	border-collapse: separate;
+  overflow-wrap: break-word;
+  box-shadow: 0rem 0rem 1rem #B0B0B0;
+}
+
+.about-card img {
+  max-width: 100%;
+}
+
+.about-card-body {
+  position:relative;
+}
+
+.about-refs {
+  position:absolute;
+  bottom: 0;
+  right: 0.7rem;
+}
+
+.about-card-body h1 {
+  font-size: 28px;
+  font-weight: 700;
+  padding-top: 3rem;
+}
+
+.about-card-text {
+  padding-top: 1rem;
+  padding-bottom: 5rem;
+  font-weight: 500 !important;
+  font-size: 16px !important;
+}
